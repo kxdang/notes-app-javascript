@@ -1,3 +1,5 @@
+"use stricts";
+
 let notes = getSavedNotes();
 
 const filters = {
