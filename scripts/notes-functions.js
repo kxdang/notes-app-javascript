@@ -87,17 +87,25 @@ const sortNotes = (notes, sortBy) => {
 
 //Render application notes
 const renderNotes = (notes, filters) => {
+  const notesEl = document.querySelector("#notes");
   notes = sortNotes(notes, filters.sortBy);
   const filteredNotes = notes.filter(note =>
     note.title.toLowerCase().includes(filters.searchText.toLowerCase())
   );
 
-  document.querySelector("#notes").innerHTML = "";
+  notesEl.innerHTML = "";
 
-  filteredNotes.forEach(note => {
-    const noteEl = generateNoteDOM(note);
-    document.querySelector("#notes").appendChild(noteEl);
-  });
+  if (filteredNotes.length > 0) {
+    filteredNotes.forEach(note => {
+      const noteEl = generateNoteDOM(note);
+      notesEl.appendChild(noteEl);
+    });
+  } else {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.textContent = "No notes to show";
+    emptyMessage.classList.add("empty-message");
+    notesEl.appendChild(emptyMessage);
+  }
 };
 
 // Save the notes to local storage
